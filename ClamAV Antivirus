@@ -1,0 +1,22 @@
+---
+- name: Install ClamAV
+  hosts: workstations
+  become: true
+
+  tasks:
+    - name: Install ClamAV
+      apt:
+        name:
+          - clamav
+          - clamav-daemon
+        state: present
+        update_cache: yes
+
+    - name: Update virus database
+      command: freshclam
+
+    - name: Ensure ClamAV daemon is running
+      service:
+        name: clamav-daemon
+        state: started
+        enabled: yes
