@@ -1,0 +1,6 @@
+TASK [Install ClamAV] **********************************************************
+ok: [192.168.56.100]
+
+TASK [Update virus database] ***************************************************
+fatal: [192.168.56.100]: FAILED! => {"changed": true, "cmd": ["freshclam"], "delta": "0:00:00.015381", "end": "2025-05-21 12:38:18.587027", "msg": "non-zero return code", "rc": 2, "start": "2025-05-21 12:38:18.571646", "stderr": "ERROR: Problem with internal logger (UpdateLogFile = /var/log/clamav/freshclam.log).\nERROR: initialize: libfreshclam init failed.\nERROR: Initialization error!", "stderr_lines": ["ERROR: Problem with internal logger (UpdateLogFile = /var/log/clamav/freshclam.log).", "ERROR: initialize: libfreshclam init failed.", "ERROR: Initialization error!"], "stdout": "ERROR: Failed to lock the log file /var/log/clamav/freshclam.log: Resource temporarily unavailable", "stdout_lines": ["ERROR: Failed to lock the log file /var/log/clamav/freshclam.log: Resource temporarily unavailable"]}
+
