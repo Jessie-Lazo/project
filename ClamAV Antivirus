@@ -1,34 +1,37 @@
-- name: Install ClamAV antivirus
-  apt:
-    name: clamav
-    state: latest
-    update_cache: yes
+---
+- name: Install and update ClamAV antivirus
+  hosts: testhost
   become: true
 
-- name: Stop freshclam service if running
-  service:
-    name: clamav-freshclam
-    state: stopped
-  become: true
+  tasks:
+    - name: Install ClamAV antivirus package
+      apt:
+        name: clamav
+        state: latest
+        update_cache: yes
 
-- name: Ensure /var/log/clamav directory exists with correct permissions
-  file:
-    path: /var/log/clamav
-    state: directory
-    owner: clamav
-    group: clamav
-    mode: '0755'
-  become: true
+    - name: Stop freshclam service if running
+      service:
+        name: clamav-freshclam
+        state: stopped
+      ignore_errors: yes
 
-- name: Update virus database
-  command: freshclam
-  become: true
-  become_user: clamav
-  register: freshclam_update
-  ignore_errors: yes
+    - name: Ensure /var/log/clamav directory exists with correct permissions
+      file:
+        path: /var/log/clamav
+        state: directory
+        owner: clamav
+        group: clamav
+        mode: '0755'
 
-- name: Start freshclam service
-  service:
-    name: clamav-freshclam
-    state: started
-  become: true
+    - name: Update virus database with freshclam
+      command: freshclam
+      become_user: clamav
+      register: freshclam_update
+      ignore_errors: yes
+
+    - name: Start freshclam service
+      service:
+        name: clamav-freshclam
+        state: started
+      ignore_errors: yes
