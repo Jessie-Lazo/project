@@ -1,6 +1,11 @@
-TASK [Install ClamAV] **********************************************************
-ok: [192.168.56.100]
+BECOME password: 
+ERROR! 'apt' is not a valid attribute for a Play
 
-TASK [Update virus database] ***************************************************
-fatal: [192.168.56.100]: FAILED! => {"changed": true, "cmd": ["freshclam"], "delta": "0:00:00.015381", "end": "2025-05-21 12:38:18.587027", "msg": "non-zero return code", "rc": 2, "start": "2025-05-21 12:38:18.571646", "stderr": "ERROR: Problem with internal logger (UpdateLogFile = /var/log/clamav/freshclam.log).\nERROR: initialize: libfreshclam init failed.\nERROR: Initialization error!", "stderr_lines": ["ERROR: Problem with internal logger (UpdateLogFile = /var/log/clamav/freshclam.log).", "ERROR: initialize: libfreshclam init failed.", "ERROR: Initialization error!"], "stdout": "ERROR: Failed to lock the log file /var/log/clamav/freshclam.log: Resource temporarily unavailable", "stdout_lines": ["ERROR: Failed to lock the log file /var/log/clamav/freshclam.log: Resource temporarily unavailable"]}
+The error appears to be in '/home/controllazo/project/clam.yml': line 2, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
 
+The offending line appears to be:
+
+---
+- name: Install ClamAV antivirus
+  ^ here
