@@ -1,0 +1,31 @@
+---
+- name: Create secure user
+  hosts: all
+  become: true
+  vars:
+    username: "secureuser"
+    ssh_key: "ssh-rsa AAAAB3..."
+
+  tasks:
+    - name: Add user
+      user:
+        name: "{{ username }}"
+        groups: sudo
+        shell: /bin/bash
+        state: present
+
+    - name: Add SSH key
+      authorized_key:
+        user: "{{ username }}"
+        key: "{{ ssh_key }}"
+
+    - name: Disable password login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
